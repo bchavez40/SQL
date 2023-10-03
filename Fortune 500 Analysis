@@ -56,12 +56,13 @@ VALUES
     ('Company JJ', 'Manufacturing', 370.0, 3100, 1, 20, 12, 7.6),
     ('Company KK', 'Healthcare', 150.2, 3400, 0, 16, 8, 5.3);
 
+#Which companies have Loyal. Semi-Loyal, or neutral employees
 
-SELECT COUNT(*) AS Total_Companies,
-CASE WHEN paid_time_off_days >= 21 THEN "MOST_PTO"
-WHEN paid_time_off_days >=18 THEN "Avg_PTO"
-WHEN paid_time_off_days >=15 THEN "Little_PTO"
-ELSE "MIN_PTO"
-END AS "PTO_Rating"
+SELECT company_name, avg_employee_tenure,
+CASE WHEN avg_employee_tenure>=7 THEN "Loyal"
+WHEN avg_employee_tenure>=5 THEN "Semi-Loyal"
+WHEN avg_employee_tenure>=3 THEN "Neutral"
+ELSE "Short-Term"
+END AS "Employee_loyalness"
 FROM fortune_companies
-Group BY PTO_Rating; 
+Order BY avg_employee_tenure desc; 
