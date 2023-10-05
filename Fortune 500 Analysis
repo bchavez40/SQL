@@ -56,7 +56,7 @@ VALUES
     ('Company JJ', 'Manufacturing', 370.0, 3100, 1, 20, 12, 7.6),
     ('Company KK', 'Healthcare', 150.2, 3400, 0, 16, 8, 5.3);
 
-#Which companies have Loyal. Semi-Loyal, or neutral employees
+#Which companies have Loyal. Semi-Loyal, or neutral employees?
 
 SELECT company_name, avg_employee_tenure,
 CASE WHEN avg_employee_tenure>=7 THEN "Loyal"
@@ -66,3 +66,35 @@ ELSE "Short-Term"
 END AS "Employee_loyalness"
 FROM fortune_companies
 Order BY avg_employee_tenure desc; 
+
+
+#Which industry has the most companies with 20+ PTO days?
+
+SELECT industry, COUNT(company_id) AS Companies
+FROM fortune_companies
+GROUP BY industry
+HAVING paid_time_off_days>=20;
+
+
+#We are expecting a child, which company offers health benefits, the most maternity leave weeks and the most PTO?
+
+SELECT company_name, healthcare_benefits, maternity_leave_weeks, paid_time_off_days
+FROM fortune_companies 
+WHERE healthcare_benefits=1 AND maternity_leave_weeks>12 AND paid_time_off_days>=20
+ORDER BY maternity_leave_weeks desc;
+
+
+#Which industry has the most employees?
+
+SELECT  industry, SUM(employees) AS total_employees
+FROM fortune_companies
+GROUP BY industry
+ORDER BY SUM(employees) desc;
+
+
+#Which company offers the least amount of PTO and what industry is it in?
+
+SELECT company_name, MIN (paid_time_off_days) AS least_PTO_offered, industry
+FROM fortune_companies;
+
+
