@@ -1,0 +1,29 @@
+SELECT *
+FROM chinook.customers;
+
+SELECT CustomerID, FirstName, LastName, Country
+FROM chinook.customers
+WHERE COUNTRY<> 'USA' 
+Order BY Country;
+
+SELECT CustomerID, LastName, FirstName
+FROM chinook.customers
+WHERE Country = 'Canada'
+ORDER BY LastName;
+
+SELECT *
+FROM chinook.invoices;
+
+SELECT i.InvoiceId, i.InvoiceDate, i.BillingCountry, c.Firstname, c.LastName
+FROM chinook.invoices i
+JOIN chinook.customers c
+ON i.CustomerId = c.CustomerId
+WHERE i.BillingCountry='Brazil'
+Order BY i.InvoiceDate; 
+
+SELECT *
+FROM chinook.employees
+WHERE TITLE='IT Staff';
+
+SELECT BillingCountry
+FROM chinook.invoices
